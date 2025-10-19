@@ -406,8 +406,9 @@
         font-size: clamp(16px, 4vw, 20px);
         font-weight: 700;
         cursor: pointer;
-        box-shadow: 0 10px 30px rgba(255, 90, 139, 0.4),
-          inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+          rgba(0, 0, 0, 0.3) 0px 7px 13px -3px,
+          rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
         letter-spacing: 1.5px;
         position: relative;
         overflow: hidden;
@@ -1049,7 +1050,7 @@
           mother:
             "💗 Mẹ ơi, con chúc mẹ luôn mạnh khỏe, an yên và mỉm cười thật nhiều, cảm ơn mẹ vì đã dành cả yêu thương để nuôi con nên người 💝",
           crush:
-            "💞 Chúc chị 20/10 thật vui vẻ ",
+            "💞 Hôm nay 20/10 chúc chị thật vui vẻ sau này thật hạnh phúc ",
         },
         typeSpeed: 30,
         heartsCount: 15,
@@ -2174,13 +2175,14 @@
           console.log(type);
           if (letterHeader && letterSignature) {
             if (type === "friend") {
-              letterHeader.innerHTML = "<span>Chúc mừng ngày phụ nữ Việt Nam 💙</span>";
+              letterHeader.innerHTML =
+                "<span>Chúc mừng ngày phụ nữ Việt Nam 💙</span>";
               letterSignature.innerHTML = "Nguyên";
             } else if (type === "mother") {
               letterHeader.innerHTML = "<span>Gửi Mẹ Yêu 💐</span>";
               letterSignature.innerHTML = "Nguyên";
             } else if (type === "crush") {
-              letterHeader.innerHTML = "<span>Gửi 💞</span>";
+              letterHeader.innerHTML = "<span>Hé nhô 🌷</span>";
               letterSignature.innerHTML = "Nguyên";
             }
 
