@@ -154,14 +154,7 @@
         font-family: "Dancing Script", cursive;
         font-size: clamp(32px, 8vw, 64px);
         font-weight: 700;
-        background: linear-gradient(
-          135deg,
-          #ff5a8b 0%,
-          #ff8fab 50%,
-          #ffb3c6 100%
-        );
         -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
         background-clip: text;
         text-align: center;
         z-index: 50;
@@ -192,9 +185,7 @@
         font-family: "Dancing Script", cursive;
         font-size: clamp(28px, 6vw, 48px);
         font-weight: 600;
-        background: linear-gradient(135deg, #ff5a8b 0%, #ff8fab 100%);
         -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
         background-clip: text;
         text-align: center;
         z-index: 150;
@@ -354,9 +345,7 @@
       .typewriter-text {
         white-space: pre-wrap;
         word-wrap: break-word;
-        background: linear-gradient(var(--accent-color));
         -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
         background-clip: text;
         font-weight: 500;
       }
@@ -444,6 +433,14 @@
         position: relative;
         z-index: 1;
       }
+
+      .open-button:hover {
+        box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+          rgba(0, 0, 0, 0.3) 0px 7px 13px -3px,
+          rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+        transform: translateY(-2px);
+      }
+
       .envelope-flap {
         transform-origin: top center;
         transform-style: preserve-3d;
@@ -593,7 +590,7 @@
         margin-top: 30px;
         font-family: "Dancing Script", cursive;
         font-size: clamp(20px, 4vw, 28px);
-        color: var(--accent-color);
+        color: var(--text-color);
         font-weight: 600;
       }
 
@@ -646,7 +643,7 @@
         }
 
         .letter-header span {
-          color: var(--accent-color);
+          color: var(--text-color);
         }
 
         .letter-signature {
@@ -750,19 +747,6 @@
 
       /* Giữ phần giữa cho mobile */
       @media (max-width: 768px) {
-        .greeting-text {
-          top: 45%; /* Giảm xuống để nằm giữa hơn */
-          transform: translate(-50%, -50%);
-          font-size: clamp(26px, 8vw, 38px);
-          line-height: 1.4;
-        }
-
-        .bicycle-container {
-          bottom: 20%; /* Đưa xe đạp cao lên chút */
-          left: 50%;
-          transform: translateX(-50%);
-        }
-
         .container {
           justify-content: center; /* Giữa theo chiều dọc */
           align-items: center;
@@ -1046,11 +1030,11 @@
         greetingText: "Chào người đẹp! 💖",
         messages: {
           friend:
-            "💕 chúc cho các chị em có một ngày 20/10 thật là vui thật là vẻ thật là hạnh và thật là phúc 💗",
+            "Chúc cho các chị em có một ngày 20/10 thật là vui, thật là vẻ, thật là hạnh và thật là phúc — luôn rạng rỡ nụ cười, tràn đầy yêu thương và nhận được thật nhiều điều ngọt ngào trong cuộc sống. 💐Chúc các chị em luôn xinh đẹp, rạng rỡ và hạnh phúc. Mong ngày 20/10 tràn đầy niềm vui, yêu thương và thật nhiều điều ngọt ngào bên người thân yêu!",
           mother:
             "💗 Mẹ ơi, con chúc mẹ luôn mạnh khỏe, an yên và mỉm cười thật nhiều, cảm ơn mẹ vì đã dành cả yêu thương để nuôi con nên người 💝",
           crush:
-            "💞 Hôm nay 20/10 chúc chị thật vui vẻ sau này thật hạnh phúc, cuộc sống không còn 1 tí tiêu cực nào luôn đặc biệt là ngày càng xinh xắn dễ thương nhó 🌷",
+            "💞 Hôm nay 20/10, em chúc chị thật vui vẻ, sau này luôn luôn hạnh phúc, cuộc sống không còn chút tiêu cực nào và nhớ giữ gìn sức khỏe và đặc biệt là ngày càng xinh xắn, dễ thương hơn nhé 💐",
         },
         typeSpeed: 30,
         heartsCount: 15,
@@ -1090,8 +1074,7 @@
         bgMusic = new Audio();
         bgMusic.loop = true;
         bgMusic.volume = 0;
-        bgMusic.src =
-          "https://cdn.pixabay.com/download/audio/2022/03/10/audio_4a465092f9.mp3";
+        bgMusic.src = "sound.mp3";
         bgMusic.addEventListener("canplay", () => {
           if (!isMuted) playBackgroundMusic();
         });
@@ -1248,6 +1231,7 @@
         gsap
           .timeline()
           .to(thankYou, {
+            y: 30,
             opacity: 1,
             scale: 1,
             duration: 0.8,
@@ -1467,11 +1451,10 @@
 
         const tl = gsap.timeline();
         tl.to(greeting, {
-          y: -100,
           opacity: 1,
           scale: 1,
-          duration: 0.5,
-          ease: "back.out(0.5)",
+          duration: 1,
+          ease: "back.out(1.7)",
         }).to(greeting, {
           opacity: 0,
           scale: 0.9,
@@ -1483,30 +1466,52 @@
 
       function showBicycle() {
         const bicycle = document.getElementById("bicycleContainer");
+        const isMobile = window.innerWidth <= 768;
+        const bicycleWidth = bicycle.offsetWidth;
+        const initialLeft = bicycle.offsetLeft;
 
-        const tl = gsap.timeline();
-        tl.to(bicycle, {
-          opacity: 1,
-          x: window.innerWidth / 2 + 150,
-          duration: 4,
-          ease: "power2.inOut",
-        })
-          .add(() => {
-            showGreeting();
-          }, "-=1")
-          .to(bicycle, {
-            x: window.innerWidth + 300,
+        if (isMobile) {
+          // Mobile: hiển thị xe ở giữa màn hình rồi tắt sau 3 giây
+          gsap.set(bicycle, {
+            opacity: 1,
+            x: window.innerWidth / 2 - bicycleWidth / 2 - initialLeft,
+          });
+          showGreeting();
+
+          gsap.to(bicycle, {
             opacity: 0,
-            duration: 2,
-            delay: 0.5,
+            duration: 3,
             ease: "power2.in",
           });
+        } else {
+          // Desktop: animation đầy đủ
+          const tl = gsap.timeline();
+          tl.to(bicycle, {
+            opacity: 1,
+            x: window.innerWidth / 2 + 150 - initialLeft,
+            duration: 4,
+            ease: "power2.inOut",
+          })
+            .call(showGreeting, null, "-=1")
+            .to(bicycle, {
+              x: window.innerWidth + 300,
+              opacity: 0,
+              duration: 2,
+              delay: 0.5,
+              ease: "power2.in",
+            });
+
+          return tl;
+        }
       }
 
       function openEnvelope() {
         if (hasOpened) return;
         hasOpened = true;
 
+        if (bgMusic.paused && !isMuted) {
+          bgMusic.play().catch(() => {});
+        }
         if (openSound) openSound();
 
         const flap = document.getElementById("envelopeFlap");
@@ -1764,8 +1769,20 @@
       }
 
       function typewriter(element, text, speed) {
+        // Xoá text cũ trước khi gõ lại
+        element.textContent = "";
+
+        // Xoá con trỏ cũ nếu có
+        const oldCursor = document.getElementById("cursor");
+        if (oldCursor) oldCursor.remove();
+
+        // Tạo con trỏ mới
+        const cursor = document.createElement("span");
+        cursor.id = "cursor";
+        cursor.className = "cursor";
+        element.parentNode.appendChild(cursor);
+
         let index = 0;
-        const cursor = document.getElementById("cursor");
 
         gsap.to(cursor, {
           opacity: 0,
@@ -1778,7 +1795,6 @@
         function type() {
           if (index < text.length) {
             const char = text.charAt(index);
-
             if (char === "\n") {
               element.innerHTML += "<br>";
             } else {
@@ -1787,14 +1803,16 @@
 
             index++;
 
+            // Tạm dừng lâu hơn nếu gặp dấu câu
             const pauseChars = [".", "!", "?", ",", "…"];
             const isPause = pauseChars.includes(char);
             const nextDelay = isPause ? speed * 10 : speed;
 
             setTimeout(type, nextDelay);
           } else {
-            gsap.killTweensOf(cursor); // ❌ dừng hiệu ứng nháy
-            // cursor.style.display = "none"; // ✅ ẩn dấu nháy hẳn
+            // Dừng con trỏ khi gõ xong
+            gsap.killTweensOf(cursor);
+            cursor.style.display = "none";
           }
         }
 
@@ -2074,10 +2092,10 @@
             text: "#e75480", // hồng đậm để tương phản
           },
           crush: {
-            gradient: ["#ff7a9e", "#ff8fb1", "#ffc2d1"], // hồng đậm hơn, gradient ngọt
-            main: "#ff4d6d", // đỏ hồng nổi bật
-            accent: "#ff8fa3", // hồng phấn nhẹ
-            text: "#fff", // chữ trắng vì nền đậm
+            main: "#ffc2d1", // Màu chính (hồng đậm, nổi bật, dùng cho nút hoặc tiêu đề)
+            gradient: ["#ff7a9e", "#ff8fb1", "#ffc2d1"], // Dải màu nền gradient (ngọt ngào, dịu dần)
+            accent: "#ff4d6d", // Màu phụ (hồng phấn nhẹ, dùng cho hover, icon, viền, v.v.)
+            text: "#ff4d6d", // Màu chữ (trắng, nổi bật trên nền hồng)
           },
         };
 
@@ -2188,7 +2206,7 @@
 
             const span = letterHeader.querySelector("span");
             if (span) {
-              span.style.color = "var(--accent-color)";
+              span.style.color = "var(--text-color)";
               span.style.fontWeight = "600";
             }
           }
